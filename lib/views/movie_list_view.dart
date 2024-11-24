@@ -42,7 +42,7 @@ class _MovieListViewState extends State<MovieListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Filmes'),
+        title: const Text('Filmes'),
       ),
       body: Column(
         children: [
@@ -55,7 +55,7 @@ class _MovieListViewState extends State<MovieListView> {
                 });
                 _searchMovies(value);
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Buscar filmes',
                 suffixIcon: Icon(Icons.search),
               ),
@@ -81,7 +81,12 @@ class _MovieListViewState extends State<MovieListView> {
                       _movies.removeAt(index);
                     });
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('${movie.title} removido')),
+                      SnackBar(
+                        content:
+                            Text('Filme "${movie.title}" removido com sucesso'),
+                        backgroundColor: Colors.red,
+                        duration: Duration(seconds: 2),
+                      ),
                     );
                   },
                   child: ListTile(
@@ -111,7 +116,14 @@ class _MovieListViewState extends State<MovieListView> {
             MaterialPageRoute(builder: (context) => AddMovieView()),
           );
           if (result == true) {
-            _loadMovies();
+            await _loadMovies();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Novo filme adicionado com sucesso!'),
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 2),
+              ),
+            );
           }
         },
         child: Icon(Icons.add),

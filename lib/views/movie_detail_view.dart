@@ -54,9 +54,19 @@ class _MovieDetailViewState extends State<MovieDetailView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(_urlImageController.text,
-                  height: 200, width: double.infinity, fit: BoxFit.cover),
-              SizedBox(height: 20),
+              Image.network(
+                _urlImageController.text,
+                height: 300, // Aumentado de 200 para 300
+                width: double.infinity,
+                fit: BoxFit.contain, // Alterado de cover para contain
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    height: 300,
+                    color: Colors.grey[300],
+                    child: Center(child: Text('Erro ao carregar imagem')),
+                  );
+                },
+              ),
               TextFormField(
                 controller: _urlImageController,
                 decoration: InputDecoration(labelText: 'URL da Imagem'),
@@ -128,6 +138,15 @@ class _MovieDetailViewState extends State<MovieDetailView> {
                     await _controller.updateMovie(
                         widget.movie.id!, widget.movie);
                     Navigator.pop(context, true);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            'Filme "${widget.movie.title}" atualizado com sucesso!'),
+                        backgroundColor: Colors.blue,
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
                   }
                 },
                 child: Text('Atualizar'),

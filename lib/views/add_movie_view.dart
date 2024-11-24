@@ -37,6 +37,14 @@ class _AddMovieViewState extends State<AddMovieView> {
       );
       await _controller.createMovie(newMovie);
       Navigator.pop(context, true);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Filme "${title}" adicionado com sucesso!'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
