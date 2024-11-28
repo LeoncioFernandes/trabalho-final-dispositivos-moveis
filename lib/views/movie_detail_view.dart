@@ -52,7 +52,7 @@ class _MovieDetailViewState extends State<MovieDetailView> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image.network(
                 _urlImageController.text,
@@ -138,7 +138,6 @@ class _MovieDetailViewState extends State<MovieDetailView> {
                     await _controller.updateMovie(
                         widget.movie.id!, widget.movie);
                     Navigator.pop(context, true);
-
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(

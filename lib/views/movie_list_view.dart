@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../controllers/movie_controller.dart';
 import '../models/movie.dart';
 import 'movie_detail_view.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class MovieListView extends StatefulWidget {
   @override
@@ -62,50 +63,78 @@ class _MovieListViewState extends State<MovieListView> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: _movies.length,
-              itemBuilder: (context, index) {
-                final movie = _movies[index];
-                return Dismissible(
-                  key: Key(movie.id.toString()),
-                  background: Container(
-                    color: Colors.red,
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(right: 20),
-                    child: Icon(Icons.delete, color: Colors.white),
-                  ),
-                  direction: DismissDirection.endToStart,
-                  onDismissed: (direction) async {
-                    await _controller.deleteMovie(movie.id!);
-                    setState(() {
-                      _movies.removeAt(index);
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content:
-                            Text('Filme "${movie.title}" removido com sucesso'),
-                        backgroundColor: Colors.red,
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                  },
-                  child: ListTile(
-                    leading: Image.network(movie.urlImage,
-                        width: 50, height: 75, fit: BoxFit.cover),
-                    title: Text(movie.title),
-                    subtitle: Text(movie.genre),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MovieDetailView(movie: movie),
+            child: _movies.isEmpty
+                ? Center(
+                    child: Text(
+                      'Filme "$_searchQuery" não encontrado!',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: _movies.length,
+                    itemBuilder: (context, index) {
+                      final movie = _movies[index];
+                      return Dismissible(
+                        key: Key(movie.id.toString()),
+                        background: Container(
+                          color: Colors.red,
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.only(right: 20),
+                          child: Icon(Icons.delete, color: Colors.white),
+                        ),
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction) async {
+                          await _controller.deleteMovie(movie.id!);
+                          setState(() {
+                            _movies.removeAt(index);
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Filme "${movie.title}" removido com sucesso'),
+                              backgroundColor: Colors.red,
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          leading: Image.network(movie.urlImage,
+                              width: 45, height: 100, fit: BoxFit.contain),
+                          title: Text(movie.title),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(movie.genre),
+                              SizedBox(height: 4),
+                              RatingBarIndicator(
+                                rating: double.parse(
+                                    movie.score.replaceAll(',', '.')),
+                                itemBuilder: (context, index) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                itemCount: 5,
+                                itemSize: 15.0,
+                                direction: Axis.horizontal,
+                              ),
+                            ],
+                          ),
+                          onTap: () async {
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MovieDetailView(movie: movie),
+                              ),
+                            );
+                            if (result == true) {
+                              await _loadMovies();
+                            }
+                          },
                         ),
                       );
                     },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),

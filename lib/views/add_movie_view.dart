@@ -57,6 +57,7 @@ class _AddMovieViewState extends State<AddMovieView> {
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
                 decoration: InputDecoration(labelText: 'URL da Imagem'),
