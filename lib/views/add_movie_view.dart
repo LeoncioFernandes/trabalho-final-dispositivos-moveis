@@ -98,8 +98,19 @@ class _AddMovieViewState extends State<AddMovieView> {
               TextFormField(
                 decoration: InputDecoration(labelText: 'Pontuação'),
                 onSaved: (value) => score = value!,
-                validator: (value) =>
-                    value!.isEmpty ? 'Campo obrigatório' : null,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Campo obrigatório';
+                  }
+                  final numValue = double.tryParse(value.replaceAll(',', '.'));
+                  if (numValue == null) {
+                    return 'Por favor, insira um número válido';
+                  }
+                  if (numValue < 0 || numValue > 5) {
+                    return 'A pontuação deve estar entre 0 e 5';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Descrição'),
