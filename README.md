@@ -39,5 +39,5 @@ flutter pub get
 
 ### Equipe:
 
-- [Thiago Ewerton](https://github.com/ThiagoEwer)
-- [Evando Costa](https://github.com/EvandoFilhoCosta)
+- [Igor Brito](https://github.com/IgorBrito02)
+- [Leoncio Fernandes](https://github.com/LeoncioFernandes)
