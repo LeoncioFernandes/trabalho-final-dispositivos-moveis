@@ -1,16 +1,43 @@
-# cinep
+# Cadastro de Filmes
 
-A new Flutter project.
+### Atividade desenvolvida no curso de Programação para Dispositivos Móveis (Flutter).
 
-## Getting Started
+Esta atividade consiste em criar uma tela cadastro, listagem, edição e remoção de Filmes.
 
-This project is a starting point for a Flutter application.
+## Requisitos
 
-A few resources to get you started if this is your first Flutter project:
+- Cadastrar um Filme;
+- Listar todos os Filmes;
+- Editar um Filme;
+- Excluir um Filme.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Persistência de informações
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Os dados serão persistidos ao consumir a API desenvolvida no BackEnd para esse projeto.
+
+### Clonar o Projeto:
+```
+git clone https://github.com/LeoncioFernandes/trabalho-final-dispositivos-moveis.git
+```
+
+### Instalar as dependências:
+
+```
+flutter pub get
+```
+
+### Tecnologias Utilizadas:
+
+- Flutter
+- Material Design
+- Dio (Consumo de API)
+- Flutter Rating Bar (Estilização do Score)
+
+### API consumida:
+
+- API customizada para cadastro e persistência em banco de dados SQL
+
+### Equipe:
+
+- [Igor Brito](https://github.com/IgorBrito02)
+- [Leoncio Fernandes](https://github.com/LeoncioFernandes)
